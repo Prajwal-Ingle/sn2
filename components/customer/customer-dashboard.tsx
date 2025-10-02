@@ -33,6 +33,9 @@ import { RecentTripsCard } from "./recent-trips-card"
 import { SpeedAnalyticsCard } from "./speed-analytics-card"
 import { FuelEfficiencyCard } from "./fuel-efficiency-card"
 import { RouteAnalyticsCard } from "./route-analytics-card"
+import { LiveTelemetryMonitor } from "../ai/live-telemetry-monitor"
+import { AIPredictionsDashboard } from "../ai/ai-predictions-dashboard"
+import { SafetyReportsViewer } from "../ai/safety-reports-viewer"
 
 export function CustomerDashboard() {
   const { user } = useAuth()
@@ -156,15 +159,18 @@ export function CustomerDashboard() {
 
       {/* Main Content Tabs */}
       <Tabs defaultValue="overview" className="space-y-4">
-        <TabsList className="premium-glass border-white/10 grid w-full grid-cols-7">
+        <TabsList className="premium-glass border-white/10 grid w-full grid-cols-8">
           <TabsTrigger
             value="overview"
             className="data-[state=active]:instagram-gradient data-[state=active]:text-white"
           >
             Overview
           </TabsTrigger>
+          <TabsTrigger value="ai-blackbox" className="data-[state=active]:instagram-gradient data-[state=active]:text-white">
+            AI Black Box
+          </TabsTrigger>
           <TabsTrigger value="trips" className="data-[state=active]:instagram-gradient data-[state=active]:text-white">
-            Recent Trips
+            Trips
           </TabsTrigger>
           <TabsTrigger
             value="analytics"
@@ -274,6 +280,31 @@ export function CustomerDashboard() {
               </CardContent>
             </Card>
           </div>
+        </TabsContent>
+
+        <TabsContent value="ai-blackbox" className="space-y-6">
+          <Tabs defaultValue="live" className="space-y-4">
+            <TabsList className="premium-glass border-white/10">
+              <TabsTrigger value="live" className="data-[state=active]:instagram-gradient data-[state=active]:text-white">
+                Live Monitor
+              </TabsTrigger>
+              <TabsTrigger value="predictions" className="data-[state=active]:instagram-gradient data-[state=active]:text-white">
+                AI Predictions
+              </TabsTrigger>
+              <TabsTrigger value="reports" className="data-[state=active]:instagram-gradient data-[state=active]:text-white">
+                Safety Reports
+              </TabsTrigger>
+            </TabsList>
+            <TabsContent value="live">
+              <LiveTelemetryMonitor />
+            </TabsContent>
+            <TabsContent value="predictions">
+              <AIPredictionsDashboard />
+            </TabsContent>
+            <TabsContent value="reports">
+              <SafetyReportsViewer />
+            </TabsContent>
+          </Tabs>
         </TabsContent>
 
         <TabsContent value="trips">
